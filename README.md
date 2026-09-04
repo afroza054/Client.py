@@ -1,17 +1,20 @@
 FTP Using Socket Programming
 A simple File Transfer Protocol (FTP) application developed in Python using Socket Programming. This project demonstrates how a client and server can communicate over a TCP connection to upload, download, and list files using a custom message-framing protocol.
+
 Features
 •	TCP socket-based client-server communication
 •	List files stored on the server
 •	Upload files from client to server
 •	Download files from server to client
 •	Custom message framing using a 4-byte length header
+
 Technologies Used
 •	Python 3
 •	Socket Programming
 •	TCP/IP
 •	socket module
 Project Structure
+
 FTP-Using-Socket-Programming/
 │
 ├── ftp_client.py
@@ -20,6 +23,7 @@ FTP-Using-Socket-Programming/
 │        └── uploaded files
 │
 └── README.md
+
 The server_storage directory is automatically created when the server starts if it does not already exist.
 Communication Process
 1.	The server creates a TCP socket.
@@ -30,6 +34,7 @@ Communication Process
 6.	The server processes the requested operation.
 7.	The server sends a response back to the client.
 8.	The connection remains active until the client sends EXIT.
+
 Message Framing
 TCP is a stream-oriented protocol, so a single recv() call does not necessarily return an entire message. To solve this problem, this project uses a 4-byte big-endian length header before every message.
 ┌──────────────────┬──────────────────────────────┐
@@ -41,6 +46,7 @@ Data   → LIST
 The send_msg() function adds the length header:
 sock.sendall(struct.pack(">I", len(msg_bytes)) + msg_bytes)
 The recv_msg() function first receives the 4-byte length and then receives exactly that number of bytes.
+
 This ensures that complete messages and file data can be transferred reliably.
 Getting Started
 1. Clone the Repository
@@ -53,26 +59,30 @@ python --version
 or:
 python3 --version
 No external Python packages are required.
+
 Running the Project
 Step 1: Start the Server
 Open a terminal and run:
 python ftp_server.py
 You should see:
-[*] FTP Server listening on 127.0.0.1:65432
+FTP Server listening on 127.0.0.1:65432
 Step 2: Start the Client
 Open another terminal in the same project directory:
 python ftp_client.py
 You should see:
-[+] Connected to FTP server at 127.0.0.1:65432
+Connected to FTP server at 127.0.0.1:65432
 
 Available Commands: LIST, UPLOAD <filename>, DOWNLOAD <filename>, EXIT
 You can now enter FTP commands.
 Available Commands
 Command	Description
+
 LIST	Displays files available on the server
 UPLOAD <filename>	Uploads a local file to the server
 DOWNLOAD <filename>	Downloads a file from the server
+
 EXIT	Closes the client connection
+
 1. LIST
 To see the files stored on the server:
 ftp> LIST
@@ -82,6 +92,7 @@ photo.jpg
 example.pdf
 If there are no files:
 Storage is empty.
+
 2. UPLOAD
 To upload a file:
 ftp> UPLOAD document.txt
@@ -104,7 +115,6 @@ hello.txt
 becomes:
 downloaded_hello.txt
 
-
 4. EXIT
 To terminate the FTP session:
 ftp> EXIT
@@ -121,7 +131,7 @@ Example:
 ftp> UPLOAD unknown.txt
 
 Local file 'unknown.txt' does not exist.
-🧩 Important Functions
+Important Functions
 send_msg()
 Adds a 4-byte message length header before sending data.
 def send_msg(sock, msg_bytes):
@@ -153,7 +163,8 @@ def recvall(sock, n):
         data.extend(packet)
 
     return bytes(data)
-🧪 Example Session
+
+Example Session
 Server
 FTP Server listening on 127.0.0.1:65432
 Connection accepted from ('127.0.0.1', 54321)
@@ -175,7 +186,7 @@ ftp> DOWNLOAD test.txt
 SUCCESS: File downloaded as 'downloaded_test.txt'
 
 ftp> EXIT
-[-] Disconnected from server.
+Disconnected from server.
 Limitations
 This project is designed for educational purposes and demonstrates the fundamentals of socket-based file transfer.
 Current limitations include:
@@ -197,6 +208,7 @@ Possible improvements include:
 •	Resume interrupted downloads
 •	Logging system
 •	Graphical User Interface (GUI)
+
 Learning Objectives
 This project helps demonstrate:
 •	Client-server architecture
@@ -207,6 +219,8 @@ This project helps demonstrate:
 •	File I/O in Python
 •	Exception handling
 •	Basic FTP concepts
+
+
 Author
 Afroza Jabin Ruma
 GitHub: https://github.com/afroza054
