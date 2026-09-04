@@ -35,22 +35,10 @@ Communication Process
 7.	The server sends a response back to the client.
 8.	The connection remains active until the client sends EXIT.
 
-Message Framing
-TCP is a stream-oriented protocol, so a single recv() call does not necessarily return an entire message. To solve this problem, this project uses a 4-byte big-endian length header before every message.
-┌──────────────────┬──────────────────────────────┐
-│ 4-byte Length    │ Message Payload              │
-└──────────────────┴──────────────────────────────┘
-For example:
-Length → 00000004
-Data   → LIST
-The send_msg() function adds the length header:
-sock.sendall(struct.pack(">I", len(msg_bytes)) + msg_bytes)
-The recv_msg() function first receives the 4-byte length and then receives exactly that number of bytes.
-
 This ensures that complete messages and file data can be transferred reliably.
 Getting Started
 1. Clone the Repository
-git clone https://github.com/afroza054/client.py.git
+git clone https://github.com/afroza054/Client.py
 2. Navigate to the Project Directory
 Cd client.py
 3. Check Python Installation
@@ -82,7 +70,6 @@ UPLOAD <filename>	Uploads a local file to the server
 DOWNLOAD <filename>	Downloads a file from the server
 
 EXIT	Closes the client connection
-
 1. LIST
 To see the files stored on the server:
 ftp> LIST
